@@ -133,7 +133,7 @@ function checkClue(targetType) {
         showFeedback(true, "找到疑點！", clue.reason);
 
         if (foundClues.size >= TOTAL_CLUES) {
-            setTimeout(endGame, 1000);
+            // No auto end, wait for user to click button in feedback modal
         }
     } else {
         // Wrong or already found
@@ -157,6 +157,13 @@ function showFeedback(isSuccess, title, message) {
     feedbackTitle.innerText = title;
     feedbackTitle.className = "modal-header " + (isSuccess ? "success" : "info");
     feedbackBody.innerText = message;
+
+    const feedbackBtn = feedbackModal.querySelector('.btn-modal');
+    if (foundClues.size >= TOTAL_CLUES) {
+        feedbackBtn.innerText = "完成遊戲";
+    } else {
+        feedbackBtn.innerText = "繼續尋找";
+    }
 
     feedbackModal.classList.add('show');
 }
