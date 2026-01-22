@@ -22,7 +22,6 @@ PhishingGame/
 │   └── game.js         # 主要遊戲控制邏輯
 ├── index.html          # 遊戲入口網頁
 ├── README.md           # 專案說明文件
-└── SA.md               # 系統分析文件
 ```
 
 ## 🚀 部署與執行方式
@@ -62,5 +61,3 @@ PhishingGame/
 *   **JavaScript (ES6+)**
 *   **html2canvas** (用於生成證書圖片)
 
----
-Developed for Security Awareness Training.
