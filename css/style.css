@@ -1,0 +1,347 @@
+:root {
+  --primary-color: #0078d4;
+  --bg-color: #f3f2f1;
+  --header-height: 48px;
+  --sidebar-width: 250px;
+  --border-color: #edebe9;
+  --text-dark: #323130;
+  --text-light: #605e5c;
+  --danger-color: #d13438;
+  --success-color: #107c10;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Container */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+/* Header */
+header {
+  height: var(--header-height);
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.score-board {
+  font-size: 14px;
+}
+
+#found-count {
+  font-weight: bold;
+}
+
+/* Main Layout */
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: #f8f8f8;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.sidebar-item {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.sidebar-item.active {
+  background-color: #e5f1fb;
+  color: var(--primary-color);
+  font-weight: 500;
+  border-left: 3px solid var(--primary-color);
+}
+
+/* Email View */
+.email-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative; /* For hotspots */
+}
+
+/* Toolbar */
+.toolbar {
+  height: 48px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 15px;
+}
+
+.tool-icon {
+  font-size: 16px;
+  color: var(--text-light);
+  cursor: default;
+}
+
+/* Email Header */
+.email-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.email-subject {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.email-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #8a8886;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.sender-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sender-name {
+  font-weight: 600;
+}
+
+.sender-email {
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+.to-me {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* Email Body */
+.email-body {
+  padding: 20px;
+  line-height: 1.6;
+  flex: 1;
+  position: relative;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: 500;
+}
+
+/* Hotspots & Interaction */
+.hotspot-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let clicks pass through usually, but we manage clicks on specific areas? */
+  /* Actually, we might attach click listeners to specific elements or overlay divs */
+}
+
+.interactive-area {
+  position: relative;
+  cursor: help; /* Hint that something is here */
+}
+
+.interactive-area:hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 230, 0, 0.1);
+  border: 1px dashed orangered;
+  pointer-events: none;
+}
+
+/* Modals */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modal-header.success { color: var(--success-color); }
+.modal-header.error { color: var(--danger-color); }
+.modal-header.info { color: var(--primary-color); }
+
+.modal-body {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: var(--text-dark);
+}
+
+.btn-modal {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Certificate */
+#certificate-container {
+  display: none;
+  position: fixed;
+  top: -9999px; /* Hide offscreen */
+}
+
+.certificate {
+  width: 800px;
+  height: 600px;
+  background: #fff;
+  border: 10px solid var(--primary-color);
+  padding: 40px;
+  text-align: center;
+  font-family: 'Times New Roman', serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="10" y="50" font-size="20" fill="gray" opacity="0.1">Phishing Fighter</text></svg>');
+  position: relative;
+}
+
+.cert-logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 150px;
+  height: auto;
+}
+
+.cert-title {
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.cert-body {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.cert-name {
+  font-size: 48px;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 30px 0;
+  border-bottom: 2px solid #333;
+  padding: 0 40px;
+}
+
+.cert-score {
+  font-size: 20px;
+  color: var(--text-light);
+  margin-top: 20px;
+}
+
+.cert-date {
+  font-size: 18px;
+  margin-top: 40px;
+  color: var(--text-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  header { padding: 0 10px; }
+  .email-header { padding: 15px; }
+  .email-body { padding: 15px; }
+}

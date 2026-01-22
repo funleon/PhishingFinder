@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>釣魚郵件來找碴 Phishing Finder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- html2canvas for certificate generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1><span style="font-size: 24px;">🎣</span> 釣魚郵件來找碴</h1>
+        <div class="score-board">
+            已找到疑點: <span id="found-count">0</span> / 5 | 得分: <span id="score">0</span>
+        </div>
+    </header>
+
+    <div id="app">
+        <div class="main-container">
+            <!-- Simulated Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-item active">收件匣 (1)</div>
+                <div class="sidebar-item">寄件備份</div>
+                <div class="sidebar-item">草稿</div>
+                <div class="sidebar-item">垃圾郵件</div>
+                <div class="sidebar-item">刪除的郵件</div>
+            </div>
+
+            <!-- Email Content -->
+            <div class="email-view" id="game-container">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <span class="tool-icon">↩️ 回覆</span>
+                    <span class="tool-icon">↪️ 轉寄</span>
+                    <span class="tool-icon">🗑️ 刪除</span>
+                    <span class="tool-icon">⚠️ 這是釣魚郵件?</span>
+                </div>
+
+                <!-- Dynamic Content Will Be Injected Here -->
+                <div id="email-content-area">
+                    <!-- Template for JS to populate -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Modal -->
+    <div id="start-modal" class="modal show">
+        <div class="modal-content">
+            <h2>歡迎來到資安小遊戲</h2>
+            <p>請仔細檢查郵件中的每一個角落。</p>
+            <p>找出 **5 個** 可疑之處並點擊它們！</p>
+            <button class="btn-modal" onclick="startGame()">開始挑戰</button>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="feedback-title" class="modal-header"></h2>
+            <div id="feedback-body" class="modal-body"></div>
+            <button class="btn-modal" onclick="closeFeedback()">繼續尋找</button>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal">
+        <div class="modal-content">
+            <h2>恭喜完成！</h2>
+            <p>您的最終得分：<span id="final-score" style="font-weight: bold; font-size: 24px;"></span> / 100</p>
+            <div style="margin: 20px 0;">
+                <label for="username">請輸入您的姓名以領取證書：</label><br>
+                <input type="text" id="username" placeholder="您的姓名"
+                    style="padding: 8px; margin-top: 5px; width: 80%; font-size: 16px;">
+            </div>
+            <button class="btn-modal" onclick="generateCertificate()">下載證書</button>
+            <button class="btn-modal" onclick="location.reload()"
+                style="background-color: #605e5c; margin-top: 10px;">再玩一次</button>
+        </div>
+    </div>
+
+    <!-- Hidden Certificate Container -->
+    <div id="certificate-container">
+        <div id="certificate" class="certificate">
+            <div class="cert-title">資安意識結業證書</div>
+            <div class="cert-body">茲證明</div>
+            <div class="cert-name" id="cert-name-text">玩家姓名</div>
+            <div class="cert-body">成功完成「釣魚郵件來找碴」挑戰</div>
+            <div class="cert-score">最終得分：<span id="cert-score-text">0</span> 分</div>
+            <div class="cert-date" id="cert-date-text">2024-01-01</div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
