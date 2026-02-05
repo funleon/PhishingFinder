@@ -1,6 +1,6 @@
 # 釣魚郵件來找碴 (Phishing Finder) 
 
-**Design by 資訊處資通安全管理部 石瑞慶 with AI  |  Last Updated: 2026/02/05**
+**Design by leon  |  Last Updated: 2026/02/05**
 
 這是一個旨在提升資安意識的互動式網頁遊戲。玩家需要在一封模擬的釣魚郵件中，找出 5 個可疑的特徵（如寄件者網域錯誤、製造緊急感、可疑連結等）。遊戲結束後，玩家可輸入姓名，系統將生成專屬的「資安意識結業證書」供預覽與下載。
 
@@ -31,6 +31,7 @@ PhishingGame/
 │   └── game.js       # 遊戲核心邏輯、點擊偵測、證書生成 (html2canvas)
 └── img/
     ├── favicon.png   # 網站圖標
+    ├── logo.png      # 證書 Logo
     └── (generated certificates...)
 ```
 
@@ -66,5 +67,5 @@ python -m http.server 8000
 ## 📝 開發注意事項與已知限制
 - **iOS 圖片儲存**：為了符合 iOS Safari 的嚴格安全性限制，在 iPad/iPhone 上產生證書時，會自動移除背景浮水印，以確保圖片能被系統正確識別並儲存至相簿。
 - **題庫修改**：若要新增題目，請編輯 `js/data.js`。
-- **Logo 更換**：目前證書 Logo 採 Base64 編碼嵌入於 CSS/HTML 中，若需更換可直接修改 `img` 標籤的 `src` 或相關 CSS。
+- **Logo 更換**：證書 Logo 使用 `img/logo.png` 檔案，若需更換請直接替換該檔案即可。
 - **字型**：證書採用「微軟正黑體」或系統預設無襯線字體。
