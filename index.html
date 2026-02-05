@@ -1,11 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     <title>釣魚郵件來找碴 Phishing Finder</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon.png" type="image/png">
     <!-- html2canvas for certificate generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -13,6 +16,7 @@
 <body>
 
     <header>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">☰</button>
         <h1><span style="font-size: 24px;">🎣</span> 釣魚郵件來找碴</h1>
         <div class="score-board">
             已找到疑點: <span id="found-count">0</span> / 5 | 得分: <span id="score">0</span>
@@ -53,7 +57,7 @@
         <div class="modal-content">
             <h2>歡迎來到資安小遊戲</h2>
             <p>請仔細檢查郵件中的每一個角落。</p>
-            <p>找出 **5 個** 可疑之處並點擊它們！</p>
+            <p>找出【 5個 】可疑之處並點擊它們！</p>
             <button class="btn-modal" onclick="startGame()">開始挑戰</button>
         </div>
     </div>
@@ -63,7 +67,7 @@
         <div class="modal-content">
             <h2 id="feedback-title" class="modal-header"></h2>
             <div id="feedback-body" class="modal-body"></div>
-            <button class="btn-modal" onclick="closeFeedback()">繼續尋找</button>
+            <button id="feedback-btn" class="btn-modal" onclick="closeFeedback()">繼續尋找</button>
         </div>
     </div>
 
@@ -77,21 +81,43 @@
                 <input type="text" id="username" placeholder="您的姓名"
                     style="padding: 8px; margin-top: 5px; width: 80%; font-size: 16px;">
             </div>
-            <button class="btn-modal" onclick="generateCertificate()">下載證書</button>
+            <button class="btn-modal" onclick="showCertificatePreview()">預覽證書</button>
             <button class="btn-modal" onclick="location.reload()"
                 style="background-color: #605e5c; margin-top: 10px;">再玩一次</button>
+        </div>
+    </div>
+
+    <!-- Certificate Preview Modal -->
+    <div id="certificate-preview-modal" class="modal">
+        <div class="modal-content" style="width: 95%; max-width: 800px; padding: 10px;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 5px;">
+                <h3 style="margin:0;">證書預覽</h3>
+                <div>
+                    <button class="btn-download-icon" onclick="downloadCertificate()" title="下載證書"
+                        style="background: none; border: none; font-size: 24px; cursor: pointer; margin-right: 15px;">⬇️</button>
+                    <span onclick="closePreview()" style="font-size: 28px; cursor: pointer; color: #aaa;">&times;</span>
+                </div>
+            </div>
+            <div style="overflow: auto; max-height: 70vh; text-align: center;">
+                <img id="preview-img" src="" alt="Certificate Preview"
+                    style="max-width: 100%; height: auto; border: 1px solid #ddd;">
+            </div>
+            <p style="margin-top: 10px; color: #666; font-size: 14px;">(若無法下載，請長按圖片選擇「加入照片」或「儲存影像」)</p>
         </div>
     </div>
 
     <!-- Hidden Certificate Container -->
     <div id="certificate-container">
         <div id="certificate" class="certificate">
+            <img src="img/logo.png" alt="Company Logo" class="cert-logo">
             <div class="cert-title">資安意識結業證書</div>
             <div class="cert-body">茲證明</div>
             <div class="cert-name" id="cert-name-text">玩家姓名</div>
             <div class="cert-body">成功完成「釣魚郵件來找碴」挑戰</div>
             <div class="cert-score">最終得分：<span id="cert-score-text">0</span> 分</div>
             <div class="cert-date" id="cert-date-text">2024-01-01</div>
+            <div style="font-size: 18px; color: #605e5c; margin-top: 5px;">XXX資安訓練中心</div>
         </div>
     </div>
 

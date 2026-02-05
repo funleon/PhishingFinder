@@ -33,7 +33,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   background: white;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
 
@@ -46,6 +46,17 @@ header {
   align-items: center;
   padding: 0 20px;
   justify-content: space-between;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 15px;
 }
 
 header h1 {
@@ -97,7 +108,8 @@ header h1 {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  position: relative; /* For hotspots */
+  position: relative;
+  /* For hotspots */
 }
 
 /* Toolbar */
@@ -191,13 +203,15 @@ header h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* Let clicks pass through usually, but we manage clicks on specific areas? */
+  pointer-events: none;
+  /* Let clicks pass through usually, but we manage clicks on specific areas? */
   /* Actually, we might attach click listeners to specific elements or overlay divs */
 }
 
 .interactive-area {
   position: relative;
-  cursor: help; /* Hint that something is here */
+  cursor: help;
+  /* Hint that something is here */
 }
 
 .interactive-area:hover::after {
@@ -222,7 +236,7 @@ header h1 {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   align-items: center;
   justify-content: center;
 }
@@ -237,14 +251,21 @@ header h1 {
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   text-align: center;
   animation: popIn 0.3s ease;
 }
 
 @keyframes popIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-header {
@@ -253,9 +274,17 @@ header h1 {
   margin-bottom: 10px;
 }
 
-.modal-header.success { color: var(--success-color); }
-.modal-header.error { color: var(--danger-color); }
-.modal-header.info { color: var(--primary-color); }
+.modal-header.success {
+  color: var(--success-color);
+}
+
+.modal-header.error {
+  color: var(--danger-color);
+}
+
+.modal-header.info {
+  color: var(--primary-color);
+}
 
 .modal-body {
   margin-bottom: 20px;
@@ -277,7 +306,11 @@ header h1 {
 #certificate-container {
   display: none;
   position: fixed;
-  top: -9999px; /* Hide offscreen */
+  left: 0;
+  top: 0;
+  z-index: -100;
+  /* Ensure it is behind everything */
+  /* Hide offscreen logic moved to JS or z-index */
 }
 
 .certificate {
@@ -287,12 +320,13 @@ header h1 {
   border: 10px solid var(--primary-color);
   padding: 40px;
   text-align: center;
-  font-family: 'Times New Roman', serif;
+  font-family: 'Microsoft JhengHei', 'Times New Roman', serif;
+  font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="10" y="50" font-size="20" fill="gray" opacity="0.1">Phishing Fighter</text></svg>');
+  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRleHQgeD0iMTAiIHk9IjUwIiBmb250LXNpemU9IjIwIiBmaWxsPSJncmF5IiBvcGFjaXR5PSIwLjEiPlBoaXNoaW5nIEZpZ2h0ZXI8L3RleHQ+PC9zdmc+');
   position: relative;
 }
 
@@ -320,7 +354,6 @@ header h1 {
 .cert-name {
   font-size: 48px;
   font-weight: bold;
-  font-family: 'Segoe UI', sans-serif;
   margin: 30px 0;
   border-bottom: 2px solid #333;
   padding: 0 40px;
@@ -340,8 +373,46 @@ header h1 {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .sidebar { display: none; }
-  header { padding: 0 10px; }
-  .email-header { padding: 15px; }
-  .email-body { padding: 15px; }
+  .sidebar {
+    display: none;
+  }
+
+  header {
+    padding: 0 10px;
+  }
+
+  .email-header {
+    padding: 15px;
+  }
+
+  .email-body {
+    padding: 15px;
+  }
+
+  /* Mobile Sidebar & Toggle */
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    display: flex;
+    position: fixed;
+    left: -250px;
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
+    z-index: 1000;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+}/* Ensure image interactions are allowed */
+#preview-img {
+    -webkit-user-select: auto;
+    user-select: auto;
+    -webkit-touch-callout: default;
+    /* Enable default iOS menu */
+    pointer-events: auto;
 }

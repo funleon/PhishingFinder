@@ -4,13 +4,13 @@ const quizData = [
     subject: "您的帳號發生異常登入",
     sender: "security@micros0ft-support.com",
     content: `
-      <p>親愛的用戶，</p>
-      <p>我們偵測到您的帳號在未知的裝置上登入。為了確保您的帳號安全，請立即驗證您的身分。</p>
+      <p><span data-target="greeting">親愛的用戶</span>，</p>
+      <p><span data-target="urgency">我們偵測到您的帳號在未知的裝置上登入。為了確保您的帳號安全，請立即驗證您的身分。</span></p>
       <p style="text-align: center; margin: 20px 0;">
-        <a href="#" class="btn-primary" onclick="return false;">立即驗證帳號</a>
+        <a href="#" class="btn-primary" onclick="return false;" data-target="link">立即驗證帳號</a>
       </p>
       <p>如果您未執行此操作，請忽略此郵件。</p>
-      <p>Microsoft 安全團隊</p>
+      <p><span data-target="signature">Microsoft 安全團隊</span></p>
     `,
     clues: [
       { id: "c1", target: "sender", reason: "⚠️ 寄件者網域拼寫錯誤！他是 'micros0ft' 而不是 'microsoft'。" },
@@ -25,13 +25,13 @@ const quizData = [
     subject: "恭喜！您中了大獎 iPhone 15 Pro",
     sender: "promo@lucky-draw-winner.xyz",
     content: `
-      <p>親愛的幸運兒，</p>
-      <p>恭喜您被選為我們年度抽獎活動的特等獎得主！您已獲得一台全新的 <strong>iPhone 15 Pro</strong>。</p>
-      <p>請點擊下方連結領取您的獎品。請注意，領獎資格將在 24 小時後失效！</p>
+      <p><span data-target="greeting">親愛的幸運兒</span>，</p>
+      <p>恭喜您被選為我們年度抽獎活動的特等獎得主！<span data-target="content">您已獲得一台全新的 <strong>iPhone 15 Pro</strong>。</span></p>
+      <p>請點擊下方連結領取您的獎品。請注意，<span data-target="urgency">領獎資格將在 24 小時後失效！</span></p>
       <p style="text-align: center; margin: 20px 0;">
-        <a href="#" class="btn-primary" onclick="return false;">點此領取獎品</a>
+        <a href="#" class="btn-primary" onclick="return false;" data-target="link">點此領取獎品</a>
       </p>
-      <p>祝您好運，<br>全球抽獎中心</p>
+      <p>祝您好運，<br><span data-target="signature">全球抽獎中心</span></p>
     `,
     clues: [
       { id: "c1", target: "sender", reason: "⚠️ 寄件者網域奇怪 (xyz)，且非知名官方活動網域。" },
@@ -46,13 +46,13 @@ const quizData = [
     subject: "緊急：發票未付款通知",
     sender: "billing@amaz0n-invoice.net",
     content: `
-      <p>客戶您好，</p>
-      <p>這是一封自動通知，您的最近一筆訂單 (#123-456789) 付款失敗。</p>
-      <p>請立即更新您的付款資訊，以免您的帳號被暫停使用。</p>
+      <p><span data-target="greeting">客戶您好</span>，</p>
+      <p>這是一封自動通知，您的最近一筆訂單 (#123-456789) <span data-target="urgency">付款失敗</span>。</p>
+      <p><span data-target="urgency">請立即更新您的付款資訊，以免您的帳號被暫停使用。</span></p>
       <p style="text-align: center; margin: 20px 0;">
-        <a href="#" class="btn-primary" onclick="return false;">更新付款資訊</a>
+        <a href="#" class="btn-primary" onclick="return false;" data-target="link">更新付款資訊</a>
       </p>
-      <p>謝謝，<br>帳務部門</p>
+      <p>謝謝，<br><span data-target="signature">帳務部門</span></p>
     `,
     clues: [
       { id: "c1", target: "sender", reason: "⚠️ 仿冒 Amazon 網域！注意 'amaz0n' 的拼寫錯誤。" },
@@ -67,13 +67,13 @@ const quizData = [
     subject: "薪資調整通知",
     sender: "hr-update@company-internal-portal.com",
     content: `
-      <p>各位同仁，</p>
+      <p><span data-target="greeting">各位同仁</span>，</p>
       <p>公司已完成本年度的薪資審查，請點擊下方連結查看您個人的薪資調整幅度。</p>
-      <p>請使用您的員工編號和密碼登入查看。</p>
+      <p><span data-target="content">請使用您的員工編號和密碼登入查看。</span></p>
       <p style="text-align: center; margin: 20px 0;">
-        <a href="#" class="btn-primary" onclick="return false;">查看薪資調整</a>
+        <a href="#" class="btn-primary" onclick="return false;" data-target="link">查看薪資調整</a>
       </p>
-      <p>人資部</p>
+      <p><span data-target="signature">人資部</span></p>
     `,
     clues: [
       { id: "c1", target: "sender", reason: "⚠️ 寄件者雖看似內部 (company-internal)，但可能是外部註冊的假網域。" },
@@ -88,13 +88,13 @@ const quizData = [
     subject: "[重要] 您的雲端硬碟容量已滿",
     sender: "support@g0ogle-drive-storage.com",
     content: `
-      <p>用戶您好，</p>
-      <p>您的雲端硬碟儲存空間已達到 100%。您將無法再上傳新檔案或接收電子郵件。</p>
-      <p>您可以免費升級 50GB 空間，請在 48 小時內啟用。</p>
+      <p><span data-target="greeting">用戶您好</span>，</p>
+      <p>您的雲端硬碟儲存空間已達到 100%。<span data-target="content">您將無法再上傳新檔案或接收電子郵件。</span></p>
+      <p><span data-target="offer">您可以免費升級 50GB 空間，</span>請在 <span data-target="urgency">48 小時內</span>啟用。</p>
       <p style="text-align: center; margin: 20px 0;">
-        <a href="#" class="btn-primary" onclick="return false;">免費升級空間</a>
+        <a href="#" class="btn-primary" onclick="return false;" data-target="link">免費升級空間</a>
       </p>
-      <p>雲端團隊</p>
+      <p><span data-target="signature">雲端團隊</span></p>
     `,
     clues: [
       { id: "c1", target: "sender", reason: "⚠️ 偽造 Google 網域！'g0ogle' 是經典的釣魚手法。" },
